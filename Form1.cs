@@ -15,6 +15,13 @@ namespace Compilador
         public Form1()
         {
             InitializeComponent();
+            textBoxEntrada.Text = "";
+            dataGridViewTokens.Rows.Clear();
+        }
+
+        private void ButtonAnalizar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
