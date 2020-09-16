@@ -113,6 +113,7 @@ namespace Compilador
                         {
                             break;
                         }
+                    //Caso para los operadores  "+" y "-"
                     case 3:
                         {
                             if(c.ToString() == "#" && i == entrada.Length - 1)
@@ -133,16 +134,77 @@ namespace Compilador
                             }
                             break;
                         }
+                    //Caso para los operadores  "*" y "/"
                     case 4:
                         {
+                            if (c.ToString() == "#" && i == entrada.Length - 1)
+                            {
+                                addToken(Token.Tipo.OPERADOR_MUL);
+                                MessageBox.Show("Análisis léxico terminado");
+                            }
+                            else if (char.IsWhiteSpace(c))
+                            {
+                                addToken(Token.Tipo.OPERADOR_MUL);
+                                estado = 0;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error léxico, no se reconoce símbolo de multiplicación");
+                                auxLex = "";
+                                estado = 13;
+                            }
                             break;
                         }
+                    //Caso para determinar si es símbolo "=" o "=="
                     case 5:
                         {
+                            if (c.ToString() == "#" && i == entrada.Length - 1)
+                            {
+                                addToken(Token.Tipo.OPERADOR_ASIG);
+                                MessageBox.Show("Análisis léxico terminado");
+                            }
+                            else if (char.IsWhiteSpace(c))
+                            {
+                                addToken(Token.Tipo.OPERADOR_ASIG);
+                                estado = 0;
+                            }
+                            else if (c.ToString() == "=")
+                            {
+                                auxLex += c;
+                                estado = 14;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error léxico, no se reconoce símbolo de asignación");
+                                auxLex = "";
+                                estado = 13;
+                            }
                             break;
                         }
+                    //Caso de valida los símbolos "<" ">" "<=" ">="
                     case 6:
                         {
+                            if (c.ToString() == "#" && i == entrada.Length - 1)
+                            {
+                                addToken(Token.Tipo.OPERADOR_REL);
+                                MessageBox.Show("Análisis léxico terminado");
+                            }
+                            else if (char.IsWhiteSpace(c))
+                            {
+                                addToken(Token.Tipo.OPERADOR_REL);
+                                estado = 0;
+                            }
+                            else if (c.ToString() == "=")
+                            {
+                                auxLex += c;
+                                estado = 14;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error léxico, no se reconoce símbolo relacional");
+                                auxLex = "";
+                                estado = 13;
+                            }
                             break;
                         }
                     case 7:
@@ -153,8 +215,30 @@ namespace Compilador
                         {
                             break;
                         }
+                    //Caso que analiza el símbolo "!" y determina si es "!" o "!="
                     case 9:
                         {
+                            if (c.ToString() == "#" && i == entrada.Length - 1)
+                            {
+                                addToken(Token.Tipo.OPERADOR_NOT);
+                                MessageBox.Show("Análisis léxico terminado");
+                            }
+                            else if (char.IsWhiteSpace(c))
+                            {
+                                addToken(Token.Tipo.OPERADOR_NOT);
+                                estado = 0;
+                            }
+                            else if (c.ToString() == "=")
+                            {
+                                auxLex += c;
+                                estado = 14;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error léxico, no se reconoce símbolo relacional");
+                                auxLex = "";
+                                estado = 13;
+                            }
                             break;
                         }
                     case 10:
@@ -169,11 +253,34 @@ namespace Compilador
                         {
                             break;
                         }
+                    //Caso que hace que en caso que se detecte un error léxico se salto todos los
+                    //caracteres erroneos hasta el siguiente lexema a analizar
                     case 13:
                         {
                             if (char.IsWhiteSpace(c))
                             {
                                 estado = 0;
+                            }
+                            break;
+                        }
+                    // Caso que valide que los operadores "==" "!=" "<=" y ">=" sean correctos
+                    case 14:
+                        {
+                            if (c.ToString() == "#" && i == entrada.Length - 1)
+                            {
+                                addToken(Token.Tipo.OPERADOR_REL);
+                                MessageBox.Show("Análisis léxico terminado");
+                            }
+                            else if (char.IsWhiteSpace(c))
+                            {
+                                addToken(Token.Tipo.OPERADOR_REL);
+                                estado = 0;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error léxico, no se reconoce símbolo relacional");
+                                auxLex = "";
+                                estado = 13;
                             }
                             break;
                         }
