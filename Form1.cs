@@ -21,7 +21,15 @@ namespace Compilador
 
         private void ButtonAnalizar_Click(object sender, EventArgs e)
         {
+            dataGridViewTokens.Rows.Clear();
 
+            AnalizadorLexico anaLex = new AnalizadorLexico();
+            List<Token> listaTokens = anaLex.escanear(textBoxEntrada.Text);
+
+            foreach (Token t in listaTokens)
+            {
+                dataGridViewTokens.Rows.Add(t.getTipo().ToString(), t.getValor().ToString());
+            }
         }
     }
 }
