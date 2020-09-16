@@ -77,18 +77,21 @@ namespace Compilador
                             }
                             else if (c.ToString() == "(" || c.ToString() == ")")
                             {
-                                estado = 10;
                                 auxLex += c;
+                                addToken(Token.Tipo.PARENTESIS);
+                                estado = 0;
                             }
                             else if (c.ToString() == "{" || c.ToString() == "}")
                             {
-                                estado = 11;
                                 auxLex += c;
+                                addToken(Token.Tipo.LLAVE);
+                                estado = 0;
                             }
                             else if (c.ToString() == ";")
                             {
-                                estado = 12;
                                 auxLex += c;
+                                addToken(Token.Tipo.PUNTOYCOMA);
+                                estado = 0;
                             }
                             else if (char.IsWhiteSpace(c))
                             {
@@ -107,10 +110,78 @@ namespace Compilador
 
                     case 1:
                         {
+                            if (c.ToString() == "#" && i == entrada.Length - 1)
+                            {
+                                if(auxLex == "if")
+                                    addToken(Token.Tipo.IF);
+                                else if(auxLex == "while")
+                                    addToken(Token.Tipo.WHILE);
+                                else if (auxLex == "return")
+                                    addToken(Token.Tipo.RETURN);
+                                else if (auxLex == "else")
+                                    addToken(Token.Tipo.ELSE);
+                                else if (auxLex == "int" || auxLex == "float" || auxLex == "void")
+                                    addToken(Token.Tipo.TIPO);
+                                else
+                                    addToken(Token.Tipo.IDENTIFICADOR);
+                                MessageBox.Show("Análisis léxico terminado");
+                            }
+                            else if (char.IsWhiteSpace(c))
+                            {
+                                if (auxLex == "if")
+                                    addToken(Token.Tipo.IF);
+                                else if (auxLex == "while")
+                                    addToken(Token.Tipo.WHILE);
+                                else if (auxLex == "return")
+                                    addToken(Token.Tipo.RETURN);
+                                else if (auxLex == "else")
+                                    addToken(Token.Tipo.ELSE);
+                                else if (auxLex == "int" || auxLex == "float" || auxLex == "void")
+                                    addToken(Token.Tipo.TIPO);
+                                else
+                                    addToken(Token.Tipo.IDENTIFICADOR);
+
+                                estado = 0;
+                            }
+                            else if(char.IsLetter(c) || char.IsDigit(c))
+                            {
+                                auxLex += c;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error léxico, no se reconoce el identificador o palabra reservada");
+                                auxLex = "";
+                                estado = 13;
+                            }
                             break;
                         }
                     case 2:
                         {
+                            if (c.ToString() == "#" && i == entrada.Length - 1)
+                            {
+                                addToken(Token.Tipo.ENTERO);
+                                MessageBox.Show("Análisis léxico terminado");
+                            }
+                            else if (char.IsWhiteSpace(c))
+                            {
+                                addToken(Token.Tipo.ENTERO);
+                                estado = 0;
+                            }
+                            else if (char.IsDigit(c))
+                            {
+                                auxLex += c; 
+                            }
+                            else if (c.ToString() == ".")
+                            {
+                                auxLex += c;
+                                estado = 10;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error léxico, no se reconoce número");
+                                auxLex = "";
+                                estado = 13;
+                            }
                             break;
                         }
                     //Caso para los operadores  "+" y "-"
@@ -207,12 +278,48 @@ namespace Compilador
                             }
                             break;
                         }
+                    //Caso que valida el operador "&&"
                     case 7:
                         {
+                            if(c.ToString() == "&")
+                            {
+                                auxLex += c;
+                                estado = 15;
+                            }
+                            else if (char.IsWhiteSpace(c))
+                            {
+                                MessageBox.Show("Error léxico, no se reconoce símbolo AND");
+                                auxLex = "";
+                                estado = 0;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error léxico, no se reconoce símbolo AND");
+                                auxLex = "";
+                                estado = 13;
+                            }
                             break;
                         }
+                    //Caso que analiza el operador "||"
                     case 8:
                         {
+                            if (c.ToString() == "|")
+                            {
+                                auxLex += c;
+                                estado = 16;
+                            }
+                            else if (char.IsWhiteSpace(c))
+                            {
+                                MessageBox.Show("Error léxico, no se reconoce símbolo OR");
+                                auxLex = "";
+                                estado = 0;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error léxico, no se reconoce símbolo OR");
+                                auxLex = "";
+                                estado = 13;
+                            }
                             break;
                         }
                     //Caso que analiza el símbolo "!" y determina si es "!" o "!="
@@ -241,12 +348,45 @@ namespace Compilador
                             }
                             break;
                         }
+                    //Caso que valida los números reales
                     case 10:
                         {
+                            if (char.IsDigit(c))
+                            {
+                                auxLex += c;
+                                estado = 11;
+                            }
+                            else if (char.IsWhiteSpace(c))
+                            {
+                                MessageBox.Show("Error léxico, no se reconoce número real");
+                                auxLex = "";
+                                estado = 0;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error léxico, no se reconoce número real");
+                                auxLex = "";
+                                estado = 13;
+                            }
                             break;
                         }
+                    //Caso que valida números reales #2
                     case 11:
                         {
+                            if (c.ToString() == "#" && i == entrada.Length - 1)
+                            {
+                                addToken(Token.Tipo.REAL);
+                                MessageBox.Show("Análisis léxico terminado");
+                            }
+                            else if (char.IsDigit(c))
+                            {
+                                auxLex += c;
+                            }
+                            else if (char.IsWhiteSpace(c))
+                            {
+                                addToken(Token.Tipo.REAL);
+                                estado = 0;
+                            }
                             break;
                         }
                     case 12:
@@ -263,7 +403,7 @@ namespace Compilador
                             }
                             break;
                         }
-                    // Caso que valide que los operadores "==" "!=" "<=" y ">=" sean correctos
+                    // Caso que valide que los operadores "==" "!=" "<=" ">=" "&&" sean correctos
                     case 14:
                         {
                             if (c.ToString() == "#" && i == entrada.Length - 1)
@@ -279,6 +419,48 @@ namespace Compilador
                             else
                             {
                                 MessageBox.Show("Error léxico, no se reconoce símbolo relacional");
+                                auxLex = "";
+                                estado = 13;
+                            }
+                            break;
+                        }
+                    //Caso que valida que el símbolo && sea correcto
+                    case 15:
+                        {
+                            if (c.ToString() == "#" && i == entrada.Length - 1)
+                            {
+                                addToken(Token.Tipo.OPERADOR_AND);
+                                MessageBox.Show("Análisis léxico terminado");
+                            }
+                            else if (char.IsWhiteSpace(c))
+                            {
+                                addToken(Token.Tipo.OPERADOR_AND);
+                                estado = 0;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error léxico, no se reconoce símbolo AND");
+                                auxLex = "";
+                                estado = 13;
+                            }
+                            break;
+                        }
+                    //Caso que valida que el símbolo || sea correcto
+                    case 16:
+                        {
+                            if (c.ToString() == "#" && i == entrada.Length - 1)
+                            {
+                                addToken(Token.Tipo.OPERADOR_OR);
+                                MessageBox.Show("Análisis léxico terminado");
+                            }
+                            else if (char.IsWhiteSpace(c))
+                            {
+                                addToken(Token.Tipo.OPERADOR_OR);
+                                estado = 0;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error léxico, no se reconoce símbolo OR");
                                 auxLex = "";
                                 estado = 13;
                             }
