@@ -28,7 +28,7 @@ namespace Compilador
 
             foreach (Token t in listaTokens)
             {
-                dataGridViewTokens.Rows.Add(t.getTipo().ToString(), t.getValor().ToString());
+                dataGridViewTokens.Rows.Add(t.getTipo().ToString(), t.getValor().ToString(), t.getValorEntero());
             }
         }
     }

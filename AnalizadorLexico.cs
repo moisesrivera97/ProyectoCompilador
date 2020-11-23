@@ -75,22 +75,40 @@ namespace Compilador
                                 estado = 9;
                                 auxLex += c;
                             }
-                            else if (c.ToString() == "(" || c.ToString() == ")")
+                            else if (c.ToString() == "(")
                             {
                                 auxLex += c;
-                                addToken(Token.Tipo.PARENTESIS);
+                                addToken(Token.Tipo.PARENTESIS_AP);
                                 estado = 0;
                             }
-                            else if (c.ToString() == "{" || c.ToString() == "}")
+                            else if(c.ToString() == ")")
                             {
                                 auxLex += c;
-                                addToken(Token.Tipo.LLAVE);
+                                addToken(Token.Tipo.PARENTESIS_CIE);
+                                estado = 0;
+                            }
+                            else if (c.ToString() == "{")
+                            {
+                                auxLex += c;
+                                addToken(Token.Tipo.LLAVE_AP);
+                                estado = 0;
+                            }
+                            else if (c.ToString() == "}")
+                            {
+                                auxLex += c;
+                                addToken(Token.Tipo.LLAVE_CIE);
                                 estado = 0;
                             }
                             else if (c.ToString() == ";")
                             {
                                 auxLex += c;
                                 addToken(Token.Tipo.PUNTOYCOMA);
+                                estado = 0;
+                            }
+                            else if(c.ToString() == ",")
+                            {
+                                auxLex += c;
+                                addToken(Token.Tipo.COMA);
                                 estado = 0;
                             }
                             else if (char.IsWhiteSpace(c))
@@ -242,7 +260,7 @@ namespace Compilador
                             else if (c.ToString() == "=")
                             {
                                 auxLex += c;
-                                estado = 14;
+                                estado = 17;
                             }
                             else
                             {
@@ -338,7 +356,7 @@ namespace Compilador
                             else if (c.ToString() == "=")
                             {
                                 auxLex += c;
-                                estado = 14;
+                                estado = 17;
                             }
                             else
                             {
@@ -466,14 +484,36 @@ namespace Compilador
                             }
                             break;
                         }
+                        // Caso que valida los símbolos == y !=
+                    case 17:
+                        {
+                            if (c.ToString() == "#" && i == entrada.Length - 1)
+                            {
+                                addToken(Token.Tipo.OPERADOR_IGUALDAD);
+                                MessageBox.Show("Análisis léxico terminado");
+                            }
+                            else if (char.IsWhiteSpace(c))
+                            {
+                                addToken(Token.Tipo.OPERADOR_IGUALDAD);
+                                estado = 0;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error léxico, no se reconoce símbolo relacional");
+                                auxLex = "";
+                                estado = 13;
+                            }
+                            break;
+                        }
                 }
             }
 
+            salida.Add(new Token(Token.Tipo.FIN_PILA, "$", (int)Token.Tipo.FIN_PILA));
             return salida;
         }
         private void addToken(Token.Tipo tipo)
         {
-            salida.Add(new Token(tipo, auxLex));
+            salida.Add(new Token(tipo, auxLex, (int)tipo));
             auxLex = "";
         }
     }

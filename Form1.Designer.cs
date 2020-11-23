@@ -34,6 +34,8 @@
             this.buttonAnalizar = new System.Windows.Forms.Button();
             this.textBoxEntrada = new System.Windows.Forms.TextBox();
             this.LabelEntrada = new System.Windows.Forms.Label();
+            this.Tipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.labelTabla = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTokens)).BeginInit();
             this.SuspendLayout();
             // 
@@ -42,11 +44,12 @@
             this.dataGridViewTokens.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewTokens.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Token,
-            this.Valor});
-            this.dataGridViewTokens.Location = new System.Drawing.Point(12, 120);
+            this.Valor,
+            this.Tipo});
+            this.dataGridViewTokens.Location = new System.Drawing.Point(452, 152);
             this.dataGridViewTokens.Name = "dataGridViewTokens";
             this.dataGridViewTokens.RowHeadersVisible = false;
-            this.dataGridViewTokens.Size = new System.Drawing.Size(505, 215);
+            this.dataGridViewTokens.Size = new System.Drawing.Size(303, 215);
             this.dataGridViewTokens.TabIndex = 0;
             // 
             // Token
@@ -62,7 +65,7 @@
             // buttonAnalizar
             // 
             this.buttonAnalizar.Font = new System.Drawing.Font("Chiller", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonAnalizar.Location = new System.Drawing.Point(556, 120);
+            this.buttonAnalizar.Location = new System.Drawing.Point(452, 46);
             this.buttonAnalizar.Name = "buttonAnalizar";
             this.buttonAnalizar.Size = new System.Drawing.Size(232, 40);
             this.buttonAnalizar.TabIndex = 1;
@@ -74,25 +77,42 @@
             // 
             this.textBoxEntrada.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxEntrada.Location = new System.Drawing.Point(12, 46);
+            this.textBoxEntrada.Multiline = true;
             this.textBoxEntrada.Name = "textBoxEntrada";
-            this.textBoxEntrada.Size = new System.Drawing.Size(776, 38);
+            this.textBoxEntrada.Size = new System.Drawing.Size(407, 321);
             this.textBoxEntrada.TabIndex = 2;
             // 
             // LabelEntrada
             // 
             this.LabelEntrada.AutoSize = true;
             this.LabelEntrada.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelEntrada.Location = new System.Drawing.Point(382, 13);
+            this.LabelEntrada.Location = new System.Drawing.Point(182, 9);
             this.LabelEntrada.Name = "LabelEntrada";
             this.LabelEntrada.Size = new System.Drawing.Size(88, 26);
             this.LabelEntrada.TabIndex = 3;
             this.LabelEntrada.Text = "Entrada";
             // 
+            // Tipo
+            // 
+            this.Tipo.HeaderText = "Tipo";
+            this.Tipo.Name = "Tipo";
+            // 
+            // labelTabla
+            // 
+            this.labelTabla.AutoSize = true;
+            this.labelTabla.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTabla.Location = new System.Drawing.Point(510, 123);
+            this.labelTabla.Name = "labelTabla";
+            this.labelTabla.Size = new System.Drawing.Size(188, 26);
+            this.labelTabla.TabIndex = 4;
+            this.labelTabla.Text = "Tabla de símbolos";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 349);
+            this.ClientSize = new System.Drawing.Size(1046, 379);
+            this.Controls.Add(this.labelTabla);
             this.Controls.Add(this.LabelEntrada);
             this.Controls.Add(this.textBoxEntrada);
             this.Controls.Add(this.buttonAnalizar);
@@ -113,6 +133,8 @@
         private System.Windows.Forms.Button buttonAnalizar;
         private System.Windows.Forms.TextBox textBoxEntrada;
         private System.Windows.Forms.Label LabelEntrada;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tipo;
+        private System.Windows.Forms.Label labelTabla;
     }
 }
 

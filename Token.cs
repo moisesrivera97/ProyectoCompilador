@@ -13,30 +13,38 @@ namespace Compilador
             IDENTIFICADOR,
             ENTERO,
             REAL,
+            CADENA,
+            TIPO,
             OPERADOR_ADD,
             OPERADOR_MUL,
-            OPERADOR_ASIG,
             OPERADOR_REL,
-            OPERADOR_AND,
             OPERADOR_OR,
+            OPERADOR_AND,
             OPERADOR_NOT,
-            PARENTESIS,
-            LLAVE,
+            OPERADOR_IGUALDAD,
             PUNTOYCOMA,
-            TIPO,
+            COMA,
+            PARENTESIS_AP,
+            PARENTESIS_CIE,
+            LLAVE_AP,
+            LLAVE_CIE,
+            OPERADOR_ASIG,
             IF,
             WHILE,
             RETURN,
-            ELSE
+            ELSE,
+            FIN_PILA
         }
 
         private Tipo tipoToken;
         private string valor;
+        private int valorEntero;
 
-        public Token(Tipo tipo, string auxLex)
+        public Token(Tipo tipo, string auxLex, int valorE)
         {
             this.tipoToken = tipo;
             this.valor = auxLex;
+            this.valorEntero = valorE;
         }
 
         public Tipo getTipo()
@@ -46,6 +54,10 @@ namespace Compilador
         public string getValor()
         {
             return valor;
+        }
+        public int getValorEntero()
+        {
+            return valorEntero;
         }
     }
 }
