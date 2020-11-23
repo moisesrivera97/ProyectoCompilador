@@ -17,16 +17,10 @@ namespace Compilador
         {
             while (true)
             {
-                foreach (Token t in listaTokens)
-                    entrada += t.getValor() + " ";
-                if (pila.Count == 0)
-                    tabla.Rows.Add("$0", entrada);
-
                 // Sección que entra al archivo .lr y encuentra la salida dependiendo del token a analizar
                 StreamReader archivo = File.OpenText("compilador.lr");
                 string linea = null;
                 int i = 0;
-                pila.Push(10);
                 while (!archivo.EndOfStream)
                 {
                     linea = archivo.ReadLine();
@@ -39,29 +33,61 @@ namespace Compilador
 
                     i++;
                 }
-                // Se convierte la línea que se captura a un array de enteros
-                linea = linea.Replace("\t", " ");
-                List<int> arraylinea = new List<int>();
-                for(int j = 0; j < linea.Length; j++)
+
+                List<int> arrayValores = obtenerArray(linea); // Se transorma el string obtenido de valores en un array de enteros
+
+                int index = listaTokens[0].getValorEntero();
+                int salidaLR = arrayValores[index];
+
+                //Se muestra en la tabla los valores de la pila, la entrada y la salida
+                foreach (Token t in listaTokens)
+                    entrada += t.getValor() + " ";
+                if (pila.Count == 0)
+                    if(salidaLR > 0)
+                        tabla.Rows.Add("$0", entrada, "D"+salidaLR.ToString());
+                    else
+                        tabla.Rows.Add("$0", entrada, "R" + salidaLR.ToString());
+                MessageBox.Show(arrayValores[index].ToString());
+            }
+        }
+
+        private List<int> obtenerArray(string linea)
+        {
+            List<int> arraylinea = new List<int>();
+
+            // Se convierte la línea que se captura a un array de enteros
+            linea = linea.Replace("\t", " ");
+            for (int j = 0; j < linea.Length; j++)
+            {
+                if (linea.Substring(j, 1) != " ")
                 {
-                    if(linea.Substring(j, 1) == "-")
+                    if (linea.Substring(j, 1) == "-")
                     {
-                        arraylinea.Add(Int32.Parse(linea.Substring(j + 1, 1))*-1);
-                        i++;
+                        if (linea.Substring(j + 2, 1) != " ")
+                        {
+                            arraylinea.Add(Int32.Parse(linea.Substring(j + 1, 1) + linea.Substring(j + 2, 1)) * -1);
+                            j++;
+                        }
+                        else
+                            arraylinea.Add(Int32.Parse(linea.Substring(j + 1, 1)) * -1);
+                        j++;
                     }
                     else
                     {
-                        if(linea.Substring(j+1, 1) != " ")
-                            arraylinea.Add(Int32.Parse(linea.Substring(j, 1)+ linea.Substring(j+1, 1)));
+                        if (j < linea.Length - 1)
+                            if (linea.Substring(j + 1, 1) != " ")
+                            {
+                                arraylinea.Add(Int32.Parse(linea.Substring(j, 1) + linea.Substring(j + 1, 1)));
+                                j++;
+                            }
+                            else
+                                arraylinea.Add(Int32.Parse(linea.Substring(j, 1)));
                         else
                             arraylinea.Add(Int32.Parse(linea.Substring(j, 1)));
                     }
-
                 }
-
-                int index = listaTokens[0].getValorEntero();
-                MessageBox.Show(arraylinea[index].ToString());
             }
+            return arraylinea;
         }
     }
 }
