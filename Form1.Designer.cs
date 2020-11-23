@@ -31,12 +31,19 @@
             this.dataGridViewTokens = new System.Windows.Forms.DataGridView();
             this.Token = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Valor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Tipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buttonAnalizar = new System.Windows.Forms.Button();
             this.textBoxEntrada = new System.Windows.Forms.TextBox();
             this.LabelEntrada = new System.Windows.Forms.Label();
-            this.Tipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.labelTabla = new System.Windows.Forms.Label();
+            this.dataGridViewSintactico = new System.Windows.Forms.DataGridView();
+            this.labelSintactico = new System.Windows.Forms.Label();
+            this.Pila = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Entrada = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Salida = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Reduccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTokens)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSintactico)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridViewTokens
@@ -46,7 +53,7 @@
             this.Token,
             this.Valor,
             this.Tipo});
-            this.dataGridViewTokens.Location = new System.Drawing.Point(452, 152);
+            this.dataGridViewTokens.Location = new System.Drawing.Point(425, 152);
             this.dataGridViewTokens.Name = "dataGridViewTokens";
             this.dataGridViewTokens.RowHeadersVisible = false;
             this.dataGridViewTokens.Size = new System.Drawing.Size(303, 215);
@@ -61,6 +68,11 @@
             // 
             this.Valor.HeaderText = "Valor";
             this.Valor.Name = "Valor";
+            // 
+            // Tipo
+            // 
+            this.Tipo.HeaderText = "Tipo";
+            this.Tipo.Name = "Tipo";
             // 
             // buttonAnalizar
             // 
@@ -92,26 +104,67 @@
             this.LabelEntrada.TabIndex = 3;
             this.LabelEntrada.Text = "Entrada";
             // 
-            // Tipo
-            // 
-            this.Tipo.HeaderText = "Tipo";
-            this.Tipo.Name = "Tipo";
-            // 
             // labelTabla
             // 
             this.labelTabla.AutoSize = true;
             this.labelTabla.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTabla.Location = new System.Drawing.Point(510, 123);
+            this.labelTabla.Location = new System.Drawing.Point(470, 123);
             this.labelTabla.Name = "labelTabla";
             this.labelTabla.Size = new System.Drawing.Size(188, 26);
             this.labelTabla.TabIndex = 4;
             this.labelTabla.Text = "Tabla de símbolos";
             // 
+            // dataGridViewSintactico
+            // 
+            this.dataGridViewSintactico.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewSintactico.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Pila,
+            this.Entrada,
+            this.Salida,
+            this.Reduccion});
+            this.dataGridViewSintactico.Location = new System.Drawing.Point(737, 37);
+            this.dataGridViewSintactico.Name = "dataGridViewSintactico";
+            this.dataGridViewSintactico.RowHeadersVisible = false;
+            this.dataGridViewSintactico.Size = new System.Drawing.Size(403, 330);
+            this.dataGridViewSintactico.TabIndex = 5;
+            // 
+            // labelSintactico
+            // 
+            this.labelSintactico.AutoSize = true;
+            this.labelSintactico.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSintactico.Location = new System.Drawing.Point(855, 9);
+            this.labelSintactico.Name = "labelSintactico";
+            this.labelSintactico.Size = new System.Drawing.Size(185, 26);
+            this.labelSintactico.TabIndex = 6;
+            this.labelSintactico.Text = "Análisis sintáctico";
+            // 
+            // Pila
+            // 
+            this.Pila.HeaderText = "Pila";
+            this.Pila.Name = "Pila";
+            // 
+            // Entrada
+            // 
+            this.Entrada.HeaderText = "Entrada";
+            this.Entrada.Name = "Entrada";
+            // 
+            // Salida
+            // 
+            this.Salida.HeaderText = "Salida";
+            this.Salida.Name = "Salida";
+            // 
+            // Reduccion
+            // 
+            this.Reduccion.HeaderText = "Reducción";
+            this.Reduccion.Name = "Reduccion";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1046, 379);
+            this.ClientSize = new System.Drawing.Size(1143, 379);
+            this.Controls.Add(this.labelSintactico);
+            this.Controls.Add(this.dataGridViewSintactico);
             this.Controls.Add(this.labelTabla);
             this.Controls.Add(this.LabelEntrada);
             this.Controls.Add(this.textBoxEntrada);
@@ -120,6 +173,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTokens)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSintactico)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -135,6 +189,12 @@
         private System.Windows.Forms.Label LabelEntrada;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tipo;
         private System.Windows.Forms.Label labelTabla;
+        private System.Windows.Forms.DataGridView dataGridViewSintactico;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Pila;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Entrada;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Salida;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Reduccion;
+        private System.Windows.Forms.Label labelSintactico;
     }
 }
 

@@ -33,7 +33,7 @@ namespace Compilador
             WHILE,
             RETURN,
             ELSE,
-            FIN_PILA
+            PESOS
         }
 
         private Tipo tipoToken;

@@ -30,6 +30,9 @@ namespace Compilador
             {
                 dataGridViewTokens.Rows.Add(t.getTipo().ToString(), t.getValor().ToString(), t.getValorEntero());
             }
+
+            AnalizadorSintactico anaSic = new AnalizadorSintactico();
+            anaSic.escanear(listaTokens, dataGridViewSintactico);
         }
     }
 }

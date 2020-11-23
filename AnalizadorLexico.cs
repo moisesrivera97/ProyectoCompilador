@@ -21,7 +21,7 @@ namespace Compilador
             auxLex = "";
             char c;
 
-            for(int i = 0; i <= entrada.Length - 1 ; i++)
+            for (int i = 0; i <= entrada.Length - 1 ; i++)
             {
                 c = entrada[i];
 
@@ -507,8 +507,7 @@ namespace Compilador
                         }
                 }
             }
-
-            salida.Add(new Token(Token.Tipo.FIN_PILA, "$", (int)Token.Tipo.FIN_PILA));
+            salida.Add(new Token(Token.Tipo.PESOS, "$", (int)Token.Tipo.PESOS));
             return salida;
         }
         private void addToken(Token.Tipo tipo)
