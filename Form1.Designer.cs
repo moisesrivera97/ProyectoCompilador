@@ -37,11 +37,11 @@
             this.LabelEntrada = new System.Windows.Forms.Label();
             this.labelTabla = new System.Windows.Forms.Label();
             this.dataGridViewSintactico = new System.Windows.Forms.DataGridView();
-            this.labelSintactico = new System.Windows.Forms.Label();
             this.Pila = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Entrada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Salida = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Reduccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.labelSintactico = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTokens)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSintactico)).BeginInit();
             this.SuspendLayout();
@@ -91,6 +91,7 @@
             this.textBoxEntrada.Location = new System.Drawing.Point(12, 46);
             this.textBoxEntrada.Multiline = true;
             this.textBoxEntrada.Name = "textBoxEntrada";
+            this.textBoxEntrada.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxEntrada.Size = new System.Drawing.Size(407, 321);
             this.textBoxEntrada.TabIndex = 2;
             // 
@@ -128,16 +129,6 @@
             this.dataGridViewSintactico.Size = new System.Drawing.Size(403, 330);
             this.dataGridViewSintactico.TabIndex = 5;
             // 
-            // labelSintactico
-            // 
-            this.labelSintactico.AutoSize = true;
-            this.labelSintactico.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelSintactico.Location = new System.Drawing.Point(855, 9);
-            this.labelSintactico.Name = "labelSintactico";
-            this.labelSintactico.Size = new System.Drawing.Size(185, 26);
-            this.labelSintactico.TabIndex = 6;
-            this.labelSintactico.Text = "Análisis sintáctico";
-            // 
             // Pila
             // 
             this.Pila.HeaderText = "Pila";
@@ -157,6 +148,16 @@
             // 
             this.Reduccion.HeaderText = "Reducción";
             this.Reduccion.Name = "Reduccion";
+            // 
+            // labelSintactico
+            // 
+            this.labelSintactico.AutoSize = true;
+            this.labelSintactico.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSintactico.Location = new System.Drawing.Point(855, 9);
+            this.labelSintactico.Name = "labelSintactico";
+            this.labelSintactico.Size = new System.Drawing.Size(185, 26);
+            this.labelSintactico.TabIndex = 6;
+            this.labelSintactico.Text = "Análisis sintáctico";
             // 
             // Form1
             // 

@@ -12,28 +12,12 @@ namespace Compilador
     class AnalizadorSintactico
     {
         private Stack<int> pila = new Stack<int>();
-        private string entrada, pilaString, reduccion;
+        private string entrada, pilaString;
         public void escanear(List<Token> listaTokens, DataGridView tabla)
         {
             while (true)
             {
-                // Sección que entra al archivo .lr y encuentra la salida dependiendo del token a analizar
-                StreamReader archivo = File.OpenText("compilador.lr");
-                string linea = null;
-                int i = 0;
-                while (!archivo.EndOfStream)
-                {
-                    linea = archivo.ReadLine();
-                    if (pila.Count == 0)
-                    {
-                        if (i == 54) break;
-                    }
-                    else
-                        if (i == pila.Peek() + 54) break;
-
-                    i++;
-                }
-                archivo.Close();
+                string linea = obtenerLinea();
                 List<int> arrayValores = obtenerArray(linea); // Se transorma el string obtenido de valores en un array de enteros
 
                 int index = listaTokens[0].getValorEntero();
@@ -44,9 +28,11 @@ namespace Compilador
                     entrada += t.getValor() + " ";
                 if (pila.Count == 0)
                     if(salidaLR > 0)
-                        tabla.Rows.Add("$0", entrada, "D"+salidaLR.ToString());
+                        tabla.Rows.Add(" 0 23", entrada, "D"+salidaLR.ToString());
+                    else if (salidaLR < 0)
+                        tabla.Rows.Add(" 0 23", entrada, "R" + ((salidaLR * -1) - 1).ToString());
                     else
-                        tabla.Rows.Add("$0", entrada, "R" + salidaLR.ToString());
+                        tabla.Rows.Add(" 0 23", entrada, "ERROR");
                 else
                 {
                     var copiaPila = new Stack<int>(new Stack<int>(pila));
@@ -56,11 +42,14 @@ namespace Compilador
                         copiaPila.Pop();
                     }
                     if (salidaLR > 0)
-                        tabla.Rows.Add(pilaString+ " $0", entrada, "D" + salidaLR.ToString());
+                        tabla.Rows.Add(pilaString+ " 0 23", entrada, "D" + salidaLR.ToString());
+                    else if (salidaLR < 0)
+                        tabla.Rows.Add(pilaString+ " 0 23", entrada, "R" + ((salidaLR * -1) - 1).ToString());
                     else
-                        tabla.Rows.Add(pilaString+ " $0", entrada, "R" + salidaLR.ToString());
+                        tabla.Rows.Add(" 0 23", entrada, "ERROR");
                 }
 
+                // Parte que realiza una acción dependiendo se se obtuvo un desplazamiento, reducción o error.
                 if(salidaLR == -1)
                 {
                     MessageBox.Show("Análisis sintáctico terminado con éxito");
@@ -68,7 +57,7 @@ namespace Compilador
                 }
                 if(salidaLR == 0)
                 {
-                    MessageBox.Show("Error sintáctico en '" + listaTokens[0] + "' ");
+                    MessageBox.Show("Error sintáctico en '" + listaTokens[0].getValor() + "' ");
                     break;
                 }
                 if(salidaLR > 0)
@@ -79,14 +68,85 @@ namespace Compilador
                 }
                 if(salidaLR < -1)
                 {
+                    StreamReader reduccion = File.OpenText("compilador.lr");
+                    string red = null;
+                    int cont = 0;
+                    while (!reduccion.EndOfStream)
+                    {
+                        red = reduccion.ReadLine();
+
+                        if (cont == ((salidaLR * -1) - 1)) break;
+
+                        cont++;
+                    }
+                    reduccion.Close();
+
+                    //Convertir en lista de cadenas el resultado de la reducción
+                    List<string> reduccionValor = new List<string>();
+                    red = red.Replace("\t", " ");
+                    string aux = null;
+                    for (int v = 0; v < red.Length; v++)
+                    {
+                        if (red.Substring(v, 1) != " ")
+                        {
+                            aux += red.Substring(v, 1);
+                            if(v == red.Length - 1)
+                                reduccionValor.Add(aux);
+                        }
+                        else
+                        {
+                            reduccionValor.Add(aux);
+                            aux = "";
+                        }
+                    }
+                    int eliminaciones = 0;
+                    while(eliminaciones < (Int32.Parse(reduccionValor[1])*2))
+                    {
+                        if(pila.Count > 0)
+                            pila.Pop();
+                        eliminaciones++;
+                    }
+                    string lineaReduccion = obtenerLinea();
+                    List<int> arrayValoresReduc = obtenerArray(lineaReduccion);
+                    int indexReduc = Int32.Parse(reduccionValor[0]);
+                    int salidaReduc = arrayValoresReduc[indexReduc];
+
+                    // Se añade la reducción a la tabla
+                    DataGridViewRow row = tabla.Rows[tabla.Rows.Count-2];
+                    if (row != null)
+                        row.Cells["Reduccion"].Value = reduccionValor[2];
+
+                    // Se añade la reducción a la pila
+                    pila.Push(Int32.Parse(reduccionValor[0]));
+                    pila.Push(salidaReduc);
 
                 }
                 pilaString = "";
                 entrada = "";
-                MessageBox.Show("Pausa para el café");
             }
         }
 
+        // Sección que entra al archivo .lr y encuentra la salida dependiendo del token a analizar
+        private string obtenerLinea()
+        {
+            StreamReader archivo = File.OpenText("compilador.lr");
+            string linea = null;
+            int i = 0;
+            while (!archivo.EndOfStream)
+            {
+                linea = archivo.ReadLine();
+                if (pila.Count == 0)
+                {
+                    if (i == 54) break;
+                }
+                else
+                    if (i == pila.Peek() + 54) break;
+
+                i++;
+            }
+            archivo.Close();
+            return linea;
+        }
         private List<int> obtenerArray(string linea)
         {
             List<int> arraylinea = new List<int>();
