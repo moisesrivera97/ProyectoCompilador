@@ -12,7 +12,7 @@ namespace Compilador
     class AnalizadorSintactico
     {
         private Stack<int> pila = new Stack<int>();
-        private string entrada, salida, pilaString, reduccion;
+        private string entrada, pilaString, reduccion;
         public void escanear(List<Token> listaTokens, DataGridView tabla)
         {
             while (true)
@@ -33,7 +33,7 @@ namespace Compilador
 
                     i++;
                 }
-
+                archivo.Close();
                 List<int> arrayValores = obtenerArray(linea); // Se transorma el string obtenido de valores en un array de enteros
 
                 int index = listaTokens[0].getValorEntero();
@@ -47,7 +47,43 @@ namespace Compilador
                         tabla.Rows.Add("$0", entrada, "D"+salidaLR.ToString());
                     else
                         tabla.Rows.Add("$0", entrada, "R" + salidaLR.ToString());
-                MessageBox.Show(arrayValores[index].ToString());
+                else
+                {
+                    var copiaPila = new Stack<int>(new Stack<int>(pila));
+                    while (copiaPila.Count > 0)
+                    {
+                        pilaString += copiaPila.Peek().ToString() + " "; 
+                        copiaPila.Pop();
+                    }
+                    if (salidaLR > 0)
+                        tabla.Rows.Add(pilaString+ " $0", entrada, "D" + salidaLR.ToString());
+                    else
+                        tabla.Rows.Add(pilaString+ " $0", entrada, "R" + salidaLR.ToString());
+                }
+
+                if(salidaLR == -1)
+                {
+                    MessageBox.Show("Análisis sintáctico terminado con éxito");
+                    break;
+                }
+                if(salidaLR == 0)
+                {
+                    MessageBox.Show("Error sintáctico en '" + listaTokens[0] + "' ");
+                    break;
+                }
+                if(salidaLR > 0)
+                {
+                    pila.Push(listaTokens[0].getValorEntero());
+                    pila.Push(salidaLR);
+                    listaTokens.RemoveAt(0);
+                }
+                if(salidaLR < -1)
+                {
+
+                }
+                pilaString = "";
+                entrada = "";
+                MessageBox.Show("Pausa para el café");
             }
         }
 
