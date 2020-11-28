@@ -103,7 +103,9 @@ namespace Compilador
                     while(eliminaciones < (Int32.Parse(reduccionValor[1])*2))
                     {
                         if(pila.Count > 0)
-                            pila.Pop();
+                        {
+                            pila.Pop(); 
+                        }
                         eliminaciones++;
                     }
                     string lineaReduccion = obtenerLinea();

@@ -33,7 +33,29 @@ namespace Compilador
             WHILE,
             RETURN,
             ELSE,
-            PESOS
+            PESOS,
+            programa,
+            Definiciones,
+            Definicion,
+            DefVar,
+            ListaVar,
+            DefFunc,
+            Parametros,
+            ListaParam,
+            BloqFunc,
+            DefLocales,
+            DefLocal,
+            Sentencias,
+            Sentencia,
+            Otro,
+            Bloque,
+            ValorRegresa,
+            Argumentos,
+            ListaArgumentos,
+            Termino,
+            LlamadaFunc,
+            SentenciaBloque,
+            Expresion
         }
 
         private Tipo tipoToken;
