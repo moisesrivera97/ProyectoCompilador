@@ -13,7 +13,12 @@ namespace Compilador
     {
         private Stack<int> pila = new Stack<int>();
         private string entrada, pilaString;
-        public void escanear(List<Token> listaTokens, DataGridView tabla)
+
+        //Datos para crear el árbol de análisis sintáctico
+        Dictionary<string, List<string>> arbol = new Dictionary<string, List<string>>();
+        Stack<string> valoresTokens = new Stack<string>();
+        int nombreAux = 0;
+        public Dictionary<string, List<string>> escanear(List<Token> listaTokens, DataGridView tabla)
         {
             while (true)
             {
@@ -64,6 +69,7 @@ namespace Compilador
                 {
                     pila.Push(listaTokens[0].getValorEntero());
                     pila.Push(salidaLR);
+                    valoresTokens.Push(listaTokens[0].getValor());
                     listaTokens.RemoveAt(0);
                 }
                 if(salidaLR < -1)
@@ -100,14 +106,31 @@ namespace Compilador
                         }
                     }
                     int eliminaciones = 0;
-                    while(eliminaciones < (Int32.Parse(reduccionValor[1])*2))
+                    string name = reduccionValor[2] + nombreAux.ToString();
+                    List<string> hijos = new List<string>();
+                    while (eliminaciones < (Int32.Parse(reduccionValor[1])*2))
                     {
                         if(pila.Count > 0)
                         {
+                            if(eliminaciones > 0 && eliminaciones % 2 != 0)
+                            {
+                                if(pila.Peek() < 24)
+                                {
+                                    hijos.Add(valoresTokens.Peek());
+                                    valoresTokens.Pop();
+                                }
+                                else
+                                {
+                                    string hijo = Enum.GetName(typeof(Token.Tipo), pila.Peek());
+                                    hijos.Add(hijo);
+                                }
+                            }
                             pila.Pop(); 
                         }
                         eliminaciones++;
                     }
+                    arbol.Add(name, hijos);
+                    nombreAux++;
                     string lineaReduccion = obtenerLinea();
                     List<int> arrayValoresReduc = obtenerArray(lineaReduccion);
                     int indexReduc = Int32.Parse(reduccionValor[0]);
@@ -126,6 +149,7 @@ namespace Compilador
                 pilaString = "";
                 entrada = "";
             }
+            return arbol;
         }
 
         // Sección que entra al archivo .lr y encuentra la salida dependiendo del token a analizar

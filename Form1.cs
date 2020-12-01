@@ -33,7 +33,17 @@ namespace Compilador
 
             dataGridViewSintactico.Rows.Clear();
             AnalizadorSintactico anaSic = new AnalizadorSintactico();
-            anaSic.escanear(listaTokens, dataGridViewSintactico);
+            Dictionary<string, List<string>> arbol = anaSic.escanear(listaTokens, dataGridViewSintactico);
+
+            foreach(KeyValuePair<string, List<string>> n in arbol)
+            {
+                string hijos = null;
+                foreach(string s in n.Value)
+                {
+                    hijos += s + ", ";
+                }
+                MessageBox.Show(n.Key + ", hijos: " + hijos);
+            }
         }
     }
 }
