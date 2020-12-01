@@ -42,6 +42,8 @@
             this.Salida = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Reduccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.labelSintactico = new System.Windows.Forms.Label();
+            this.richTextBoxArbol = new System.Windows.Forms.RichTextBox();
+            this.labelArbol = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTokens)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSintactico)).BeginInit();
             this.SuspendLayout();
@@ -92,7 +94,7 @@
             this.textBoxEntrada.Multiline = true;
             this.textBoxEntrada.Name = "textBoxEntrada";
             this.textBoxEntrada.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxEntrada.Size = new System.Drawing.Size(407, 321);
+            this.textBoxEntrada.Size = new System.Drawing.Size(407, 294);
             this.textBoxEntrada.TabIndex = 2;
             // 
             // LabelEntrada
@@ -159,11 +161,31 @@
             this.labelSintactico.TabIndex = 6;
             this.labelSintactico.Text = "Análisis sintáctico";
             // 
+            // richTextBoxArbol
+            // 
+            this.richTextBoxArbol.Location = new System.Drawing.Point(12, 373);
+            this.richTextBoxArbol.Name = "richTextBoxArbol";
+            this.richTextBoxArbol.Size = new System.Drawing.Size(716, 276);
+            this.richTextBoxArbol.TabIndex = 7;
+            this.richTextBoxArbol.Text = "";
+            // 
+            // labelArbol
+            // 
+            this.labelArbol.AutoSize = true;
+            this.labelArbol.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelArbol.Location = new System.Drawing.Point(135, 343);
+            this.labelArbol.Name = "labelArbol";
+            this.labelArbol.Size = new System.Drawing.Size(160, 26);
+            this.labelArbol.TabIndex = 8;
+            this.labelArbol.Text = "Árbol sintáctico";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1143, 379);
+            this.ClientSize = new System.Drawing.Size(1143, 661);
+            this.Controls.Add(this.labelArbol);
+            this.Controls.Add(this.richTextBoxArbol);
             this.Controls.Add(this.labelSintactico);
             this.Controls.Add(this.dataGridViewSintactico);
             this.Controls.Add(this.labelTabla);
@@ -196,6 +218,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Salida;
         private System.Windows.Forms.DataGridViewTextBoxColumn Reduccion;
         private System.Windows.Forms.Label labelSintactico;
+        private System.Windows.Forms.RichTextBox richTextBoxArbol;
+        private System.Windows.Forms.Label labelArbol;
     }
 }
 

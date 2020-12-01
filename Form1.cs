@@ -35,15 +35,9 @@ namespace Compilador
             AnalizadorSintactico anaSic = new AnalizadorSintactico();
             Dictionary<string, List<string>> arbol = anaSic.escanear(listaTokens, dataGridViewSintactico);
 
-            foreach(KeyValuePair<string, List<string>> n in arbol)
-            {
-                string hijos = null;
-                foreach(string s in n.Value)
-                {
-                    hijos += s + ", ";
-                }
-                MessageBox.Show(n.Key + ", hijos: " + hijos);
-            }
+            richTextBoxArbol.Text = "";
+            mostrarArbol crearArbol = new mostrarArbol();
+            crearArbol.desplegar(arbol, richTextBoxArbol);
         }
     }
 }
