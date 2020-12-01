@@ -15,10 +15,9 @@ namespace Compilador
         private string entrada, pilaString;
 
         //Datos para crear el árbol de análisis sintáctico
-        Dictionary<string, List<string>> arbol = new Dictionary<string, List<string>>();
-        Stack<string> valoresTokens = new Stack<string>();
         int nombreAux = 0;
-        public Dictionary<string, List<string>> escanear(List<Token> listaTokens, DataGridView tabla)
+        Stack<Dictionary<string, string>> arbolReal = new Stack<Dictionary<string, string>>(); //Lista para pruebas
+        public Stack<Dictionary<string, string>> escanear(List<Token> listaTokens, DataGridView tabla)
         {
             while (true)
             {
@@ -69,7 +68,9 @@ namespace Compilador
                 {
                     pila.Push(listaTokens[0].getValorEntero());
                     pila.Push(salidaLR);
-                    valoresTokens.Push(listaTokens[0].getValor());
+                    Dictionary<string, string> dic = new Dictionary<string, string>(); // pruebas
+                    dic.Add(listaTokens[0].getValor(), ""); //pruebas
+                    arbolReal.Push(dic);   // Arbol para pruebas
                     listaTokens.RemoveAt(0);
                 }
                 if(salidaLR < -1)
@@ -106,30 +107,54 @@ namespace Compilador
                         }
                     }
                     int eliminaciones = 0;
-                    string name = reduccionValor[2] + nombreAux.ToString();
-                    List<string> hijos = new List<string>();
-                    while (eliminaciones < (Int32.Parse(reduccionValor[1])*2))
+                    string name = null;
+                    if (reduccionValor[2] != "programa")
+                        name = reduccionValor[2] + "," + nombreAux.ToString();
+                    else
+                        name = reduccionValor[2];
+
+                    // Lista de pruebas
+                    Dictionary<string, string> nodo = new Dictionary<string, string>();
+                    string hijos = "[";
+                    if (Int32.Parse(reduccionValor[1]) == 0)
                     {
-                        if(pila.Count > 0)
-                        {
-                            if(eliminaciones > 0 && eliminaciones % 2 != 0)
-                            {
-                                if(pila.Peek() < 24)
-                                {
-                                    hijos.Add(valoresTokens.Peek());
-                                    valoresTokens.Pop();
-                                }
-                                else
-                                {
-                                    string hijo = Enum.GetName(typeof(Token.Tipo), pila.Peek());
-                                    hijos.Add(hijo);
-                                }
-                            }
-                            pila.Pop(); 
-                        }
-                        eliminaciones++;
+                        nodo.Add(name, "");
+                        arbolReal.Push(nodo);
                     }
-                    arbol.Add(name, hijos);
+                    else
+                    {
+                        while (eliminaciones < Int32.Parse(reduccionValor[1])*2)
+                        {
+                            if (pila.Count > 0)
+                            {
+                                if (eliminaciones > 0 && eliminaciones % 2 != 0)
+                                {
+                                    if (arbolReal.Peek().Values.First() == "")
+                                    {
+                                        if (eliminaciones != Int32.Parse(reduccionValor[1])*2 - 1)
+                                            hijos += arbolReal.Peek().Keys.First().ToString() + "?";
+                                        else
+                                            hijos += arbolReal.Peek().Keys.First().ToString();
+                                        arbolReal.Pop();
+                                    }
+                                    else
+                                    {
+                                        if (eliminaciones != Int32.Parse(reduccionValor[1])*2 - 1)
+                                            hijos += arbolReal.Peek().Keys.First() + arbolReal.Peek().Values.First() + "?";
+                                        else
+                                            hijos += arbolReal.Peek().Keys.First() + arbolReal.Peek().Values.First();
+                                        arbolReal.Pop();
+                                    }
+                                }
+                                pila.Pop();
+                            }
+                            eliminaciones++;
+                        }
+                        hijos += "]";
+                        nodo.Add(name, hijos);
+                        arbolReal.Push(nodo);
+                    }
+                    //Termina lista de pruebas
                     nombreAux++;
                     string lineaReduccion = obtenerLinea();
                     List<int> arrayValoresReduc = obtenerArray(lineaReduccion);
@@ -149,7 +174,7 @@ namespace Compilador
                 pilaString = "";
                 entrada = "";
             }
-            return arbol;
+            return arbolReal;
         }
 
         // Sección que entra al archivo .lr y encuentra la salida dependiendo del token a analizar

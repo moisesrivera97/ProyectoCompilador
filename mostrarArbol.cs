@@ -9,16 +9,28 @@ namespace Compilador
 {
     class mostrarArbol
     {
-        public void desplegar(Dictionary<string, List<string>> arbol, RichTextBox textBox)
+        public void desplegar(Stack<Dictionary<string, string>> arbol, RichTextBox textBox)
         {
-            while(arbol.Count > 0)
+            foreach(KeyValuePair<string,string> v in arbol.Peek())
             {
                 textBox.SelectionStart = textBox.TextLength;
                 textBox.SelectionLength = 0;
-                textBox.AppendText(arbol.Keys.First() + "\n");
+                textBox.AppendText(v.Key + "\n hijos: \n" + v.Value);
+            }
+            
+            /*while(arbol.Count > 0)
+            {
+                string hijos = null;
+                foreach(string h in arbol.Values.First())
+                {
+                    hijos += h + "\t ";
+                }
+                textBox.SelectionStart = textBox.TextLength;
+                textBox.SelectionLength = 0;
+                textBox.AppendText(arbol.Keys.First() + "\t\t hijos: " + hijos + "\n");
 
                 arbol.Remove(arbol.Keys.First());
-            }
+            }*/
             /*
             foreach(KeyValuePair<string, List<string>> n in arbol)
             {

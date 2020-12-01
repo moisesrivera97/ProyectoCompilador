@@ -33,7 +33,7 @@ namespace Compilador
 
             dataGridViewSintactico.Rows.Clear();
             AnalizadorSintactico anaSic = new AnalizadorSintactico();
-            Dictionary<string, List<string>> arbol = anaSic.escanear(listaTokens, dataGridViewSintactico);
+            Stack<Dictionary<string, string>> arbol = anaSic.escanear(listaTokens, dataGridViewSintactico);
 
             richTextBoxArbol.Text = "";
             mostrarArbol crearArbol = new mostrarArbol();
