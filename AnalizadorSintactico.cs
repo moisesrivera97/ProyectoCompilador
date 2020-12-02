@@ -109,7 +109,7 @@ namespace Compilador
                     int eliminaciones = 0;
                     string name = null;
                     if (reduccionValor[2] != "programa")
-                        name = reduccionValor[2] + "," + nombreAux.ToString();
+                        name = reduccionValor[2] + "_" + nombreAux.ToString();
                     else
                         name = reduccionValor[2];
 
