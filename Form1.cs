@@ -39,8 +39,9 @@ namespace Compilador
             mostrarArbol crearArbol = new mostrarArbol();
             string semantico = crearArbol.desplegar(arbol, richTextBoxArbol);
 
+
             AnalisisSemantico analisisSemantico = new AnalisisSemantico();
-            MessageBox.Show(semantico);
+            analisisSemantico.analizar(semantico, listaTokens);
         }
     }
 }
