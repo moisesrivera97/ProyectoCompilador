@@ -37,7 +37,10 @@ namespace Compilador
 
             richTextBoxArbol.Text = "";
             mostrarArbol crearArbol = new mostrarArbol();
-            crearArbol.desplegar(arbol, richTextBoxArbol);
+            string semantico = crearArbol.desplegar(arbol, richTextBoxArbol);
+
+            AnalisisSemantico analisisSemantico = new AnalisisSemantico();
+            MessageBox.Show(semantico);
         }
     }
 }
