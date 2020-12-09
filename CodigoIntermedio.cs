@@ -22,18 +22,50 @@ namespace Compilador
                     Regex identificador = new Regex(@"[int|float][a-zA-Z0-9]+");
                     if (identificador.IsMatch(aux))
                     {
-                        textBox.SelectionStart = textBox.TextLength;
-                        textBox.SelectionLength = 0;
-                        int pos = aux.IndexOf(" ");
-                        string nombre = aux.Substring(pos+1);
-                        string valor = aux.Substring(0, pos);
-                        textBox.AppendText(nombre + " = " + valor + "\n");
-                        aux = "";
+                        if (!aux.Contains(","))
+                        {
+                            textBox.SelectionStart = textBox.TextLength;
+                            textBox.SelectionLength = 0;
+                            int pos = aux.IndexOf(" ");
+                            string nombre = aux.Substring(pos + 1);
+                            string valor = aux.Substring(0, pos);
+                            textBox.AppendText(nombre + " = " + valor + "\n");
+                            aux = "";
+                        }
+                        else
+                        {
+                            int pos = aux.IndexOf(" ");
+                            string valor = aux.Substring(0, pos);
+                            string nombres = aux.Substring(pos + 1);
+                            string nomAux = null;
+                            MessageBox.Show(nombres);
+                            while (nombres.Length > 0)
+                            {
+                                if(nombres[0].ToString() != ",")
+                                {
+                                    nomAux += nombres[0].ToString();
+                                    nombres = nombres.Substring(1);
+                                }
+                                else
+                                {
+                                    textBox.SelectionStart = textBox.TextLength;
+                                    textBox.SelectionLength = 0;
+                                    textBox.AppendText(nomAux + " = " + valor + "\n");
+                                    nomAux = "";
+                                    nombres = nombres.Substring(1);
+                                }
+                            }
+                            textBox.SelectionStart = textBox.TextLength;
+                            textBox.SelectionLength = 0;
+                            textBox.AppendText(nomAux + " = " + valor + "\n");
+                            nomAux = "";
+                            aux = "";
+                        }
                     }
                 }
                 else if(simbolos[i].getTipo() == Token.Tipo.LLAVE_AP)
                 {
-
+                    aux = "";
                 }
                 else if(simbolos[i].getTipo() == Token.Tipo.IF)
                 {
