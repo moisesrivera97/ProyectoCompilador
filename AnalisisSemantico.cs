@@ -19,7 +19,7 @@ namespace Compilador
 
         private void declaracionesPrevias(string arbol, List<Token> tablaSimbolos)
         {
-            Regex variables = new Regex(@"[int|float][a-zA-Z0-9]+;+");
+            Regex variables = new Regex(@"[int|float][a-zA-Z0-9]+;");
             if (variables.IsMatch(arbol))
             {
                 MessageBox.Show("Hay variables");

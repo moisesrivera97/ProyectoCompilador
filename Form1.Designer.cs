@@ -44,6 +44,8 @@
             this.labelSintactico = new System.Windows.Forms.Label();
             this.richTextBoxArbol = new System.Windows.Forms.RichTextBox();
             this.labelArbol = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textboxCodigoIntermedio = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTokens)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSintactico)).BeginInit();
             this.SuspendLayout();
@@ -179,11 +181,31 @@
             this.labelArbol.TabIndex = 8;
             this.labelArbol.Text = "Árbol sintáctico";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(830, 373);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(190, 26);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Código Intermedio";
+            // 
+            // textboxCodigoIntermedio
+            // 
+            this.textboxCodigoIntermedio.Location = new System.Drawing.Point(737, 402);
+            this.textboxCodigoIntermedio.Name = "textboxCodigoIntermedio";
+            this.textboxCodigoIntermedio.Size = new System.Drawing.Size(394, 247);
+            this.textboxCodigoIntermedio.TabIndex = 10;
+            this.textboxCodigoIntermedio.Text = "";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1143, 661);
+            this.Controls.Add(this.textboxCodigoIntermedio);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.labelArbol);
             this.Controls.Add(this.richTextBoxArbol);
             this.Controls.Add(this.labelSintactico);
@@ -220,6 +242,8 @@
         private System.Windows.Forms.Label labelSintactico;
         private System.Windows.Forms.RichTextBox richTextBoxArbol;
         private System.Windows.Forms.Label labelArbol;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.RichTextBox textboxCodigoIntermedio;
     }
 }
 

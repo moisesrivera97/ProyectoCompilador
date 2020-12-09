@@ -49,6 +49,7 @@
     <Compile Include="AnalisisSemantico.cs" />
     <Compile Include="AnalizadorLexico.cs" />
     <Compile Include="AnalizadorSintactico.cs" />
+    <Compile Include="CodigoIntermedio.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

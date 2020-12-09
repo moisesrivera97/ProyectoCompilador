@@ -35,6 +35,8 @@ namespace Compilador
             AnalizadorSintactico anaSic = new AnalizadorSintactico();
             Stack<Dictionary<string, string>> arbol = anaSic.escanear(listaTokens, dataGridViewSintactico);
 
+            List<Token> tablaSimbolos = anaLex.escanear(textBoxEntrada.Text);
+
             richTextBoxArbol.Text = "";
             mostrarArbol crearArbol = new mostrarArbol();
             string semantico = crearArbol.desplegar(arbol, richTextBoxArbol);
@@ -42,6 +44,10 @@ namespace Compilador
 
             AnalisisSemantico analisisSemantico = new AnalisisSemantico();
             analisisSemantico.analizar(semantico, listaTokens);
+
+            textboxCodigoIntermedio.Text = "";
+            CodigoIntermedio codigoIntermedio = new CodigoIntermedio();
+            codigoIntermedio.generarCodigo(semantico, textboxCodigoIntermedio, tablaSimbolos);
         }
     }
 }
