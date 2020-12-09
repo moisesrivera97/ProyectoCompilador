@@ -19,6 +19,7 @@ namespace Compilador
 
         private void declaracionesPrevias(string arbol, List<Token> tablaSimbolos)
         {
+            /*
             //Validar sumas, restas, multiplicacion, division, and y or
             Regex suma = new Regex(@"[+]+");
             if (suma.IsMatch(arbol))
@@ -49,7 +50,7 @@ namespace Compilador
             if (orS.IsMatch(arbol))
             {
                 MessageBox.Show("Hay or");
-            }
+            }*/
         }
 
         private void asignacionDeValor(string arbol, List<Token> tablaSimbolos)
